@@ -1,4 +1,4 @@
-# Ember-orientation [![Build Status](https://travis-ci.org/truenorth/ember-orientation.svg?branch=master)](https://travis-ci.org/truenorth/ember-resize) [![Code Climate](https://codeclimate.com/github/truenorth/ember-orientation/badges/gpa.svg)](https://codeclimate.com/github/truenorth/ember-orientation) [![npm version](https://badge.fury.io/js/ember-orientation.svg)](http://badge.fury.io/js/ember-orientation)
+# Ember-orientation [![Build Status](https://travis-ci.org/truenorth/ember-orientation.svg?branch=master)](https://travis-ci.org/truenorth/ember-orientation) [![Code Climate](https://codeclimate.com/github/truenorth/ember-orientation/badges/gpa.svg)](https://codeclimate.com/github/truenorth/ember-orientation) [![npm version](https://badge.fury.io/js/ember-orientation.svg)](http://badge.fury.io/js/ember-orientation)
 
 Effortlessly respond to device orientation events and changes 
 
