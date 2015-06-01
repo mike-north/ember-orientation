@@ -7,6 +7,64 @@ Effortlessly respond to device orientation events and changes
 * ember-cli < 0.2.3 `ember install:addon ember-orientation`
 * ember-cli >= 0.2.3 `ember install ember-orientation`
 
+### Service: `DeviceOrientation`
+
+Included in this addon is a service that emits events on orientation change...
+
+```js
+let MyComponent = Ember.Component.extend({
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.get('orientation').on('tilt', evt => {
+      console.log(`alpha: ${evt.alpha}\tbeta: ${evt.beta}\tgamma: ${evt.gamma}`);
+    });
+  }
+
+});
+```
+
+...and has properties
+with the latest orientation values that you can bind to
+
+```js
+let MyComponent = Ember.Component.extend({
+  alphaTiltAngle: Ember.computed.alias('orientation.alpha')
+});
+```
+
+### Mixin: `DeviceOrientationAware`
+
+To make this service even easier to use, a mixin is included
+
+```js
+import DeviceOrientationAware from 'ember-orientation/mixins/device-orientation-aware';
+
+let MyComponent = Ember.Component.extend(DeviceOrientationAware, {
+
+  // Fires whenever tilt exceeds "sensitivity"
+  didTilt(evt) {
+    let {alpha, beta, gamma} = evt;
+    ...
+  },
+
+  // A debounced version
+  debouncedDidTilt(evt) {
+    let {alpha, beta, gamma} = evt;
+    ...
+  },
+
+  // tiltAlpha, tiltBeta, tiltGamma properties are included
+  transformStyle: Ember.computed('tiltAlpha', 'tiltBeta', 'tiltGamma', {
+    get() {
+      return `transform: rotateZ(${(this.get('tiltAlpha') - 180 )}deg) ` +
+             `rotateX(${this.get('tiltBeta')}deg) ` +
+             `rotateY(${- this.get('tiltGamma')}deg)`;
+    }
+  })
+});
+```
 
 ### Configuration
 
@@ -16,12 +74,17 @@ in your `config/environment.js`, you may configure some options
 module.exports = function(environment) {
   var ENV = {
     orientationServiceDefaults: {
-      debounceTimeout    : 50,
+      debounceTimeout    : 50, // ms
+      tiltAngleSensitivity: 1, // degrees
       injectionFactories : [ 'view', 'component']
     }
   }
 }
 ```
+* `debounceTimeout` - Debounce time used for `debouncedDidTilt` hook
+* `tiltAngleSensitivity` - `didTilt` and `debouncedDidTilt` will only be called when tilt angle along any access is `>=` this value (in degrees)
+* `injectionFactories` - customize which types of objects the `orientation` service will be injected onto upon initialization
+
 
 ## Installation
 
