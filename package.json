@@ -1,7 +1,7 @@
 {
-  "name": "ember-resize",
-  "version": "0.0.3-alpha",
-  "description": "Idiomatically handle window and view resizes in Ember.js",
+  "name": "ember-orientation",
+  "version": "0.0.1",
+  "description": "Idiomatically mobile device orientation changes in Ember.js",
   "directories": {
     "doc": "doc",
     "test": "tests"

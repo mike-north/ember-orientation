@@ -1,5 +1,5 @@
 {
-  "name": "ember-resize",
+  "name": "ember-orientation",
   "dependencies": {
     "ember": "beta",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
