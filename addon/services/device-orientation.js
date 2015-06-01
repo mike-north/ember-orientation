@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { transformationMatrix, transformVector } from '../utils/orientation-transformation-matrix';
 
 const { classify } = Ember.String;
 const { map } = Ember.EnumerableUtils;
@@ -24,16 +25,28 @@ export default Ember.Service.extend(Ember.Evented, {
     let svc = this;
     this._onTiltHandler = event => {
       if (svc._shouldFireEvent(event)) {
+        let { alpha, beta, gamma } = event;
         svc.setProperties({
-          '_tilt.alpha': event.alpha,
-          '_tilt.beta': event.beta,
-          '_tilt.gamma': event.gamma
+          '_tilt.alpha': alpha,
+          '_tilt.beta': beta,
+          '_tilt.gamma': gamma
         });
+        // console.log('MTX', orientationTransformationMatrix(alpha, beta, gamma));
         svc._fireTiltEvent(event);
         Ember.run.debounce(svc, svc._fireDebouncedTiltEvent, event, this.get('debounceTimeout'));
       }
     };
     this._installTiltListener();
+  },
+
+  normalVector() {
+    const { alpha, beta, gamma } = this.get('_tilt');
+    return transformVector([0, 0, 1], alpha, beta, gamma);
+  },
+
+  transformationMatrix() {
+    const { alpha, beta, gamma } = this.get('_tilt');
+    return transformationMatrix(alpha, beta, gamma);
   },
 
   destroy() {
