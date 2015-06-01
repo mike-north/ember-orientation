@@ -34,6 +34,12 @@ let MyComponent = Ember.Component.extend({
 });
 ```
 
+The service also has two methods to make the tilt data more easily consumable
+
+* `transformationMatrix` - a 9-length transformation matrix formed
+![Rotation Matrix](https://dev.opera.com/articles/w3c-device-orientation-usage/equation13a.png)
+* normalVector - a 3-length unit vector normal to the screen of the device.
+
 ### Mixin: `DeviceOrientationAware`
 
 To make this service even easier to use, a mixin is included
