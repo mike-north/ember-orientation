@@ -5,6 +5,7 @@ module.exports = function(/* environment, appConfig */) {
     orientationServiceDefaults: {
       debounceTimeout: 50,
       tiltAngleSensitivity: 1,
+      accelerationSensitivity: 0.3,
       injectionFactories: ['view', 'component']
     }
   };

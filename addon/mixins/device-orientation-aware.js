@@ -15,6 +15,8 @@ export default Ember.Mixin.create({
     this._super(...arguments);
     this.get('_orientationService').on('tilt', this, this.didTilt);
     this.get('_orientationService').on('debouncedTilt', this, this.debouncedDidTilt);
+    this.get('_orientationService').on('deviceMove', this, this.didMove);
+    this.get('_orientationService').on('debouncedDeviceMove', this, this.debouncedDidMove);
   },
 
   tiltAlpha: Ember.computed.alias('_orientationService.alpha'),
@@ -22,5 +24,7 @@ export default Ember.Mixin.create({
   tiltGamma: Ember.computed.alias('_orientationService.gamma'),
 
   didTilt(/*evt*/) {},
-  debouncedDidTilt(/*evt*/) {}
+  debouncedDidTilt(/*evt*/) {},
+  didMove(/*evt*/) {},
+  debouncedDidMove(/*evt*/) {}
 });
