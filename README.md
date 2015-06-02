@@ -1,9 +1,9 @@
 # Ember-orientation [![Build Status](https://travis-ci.org/truenorth/ember-orientation.svg?branch=master)](https://travis-ci.org/truenorth/ember-orientation) [![Code Climate](https://codeclimate.com/github/truenorth/ember-orientation/badges/gpa.svg)](https://codeclimate.com/github/truenorth/ember-orientation) [![npm version](https://badge.fury.io/js/ember-orientation.svg)](http://badge.fury.io/js/ember-orientation)
-
-![Device Orientation Angles](http://i60.tinypic.com/k1ri0z.jpg)
-Image Source: Opera developer docs
-
 Effortlessly respond to device orientation events and changes 
+
+
+![Device Orientation Angles](http://i60.tinypic.com/k1ri0z.jpg) *
+
 
 ### Use
 
@@ -114,5 +114,9 @@ module.exports = function(environment) {
 ## Building
 
 * `ember build`
+
+## Credits
+  * * Image Source: Opera developer docs
+
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
