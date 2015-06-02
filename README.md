@@ -1,5 +1,8 @@
 # Ember-orientation [![Build Status](https://travis-ci.org/truenorth/ember-orientation.svg?branch=master)](https://travis-ci.org/truenorth/ember-orientation) [![Code Climate](https://codeclimate.com/github/truenorth/ember-orientation/badges/gpa.svg)](https://codeclimate.com/github/truenorth/ember-orientation) [![npm version](https://badge.fury.io/js/ember-orientation.svg)](http://badge.fury.io/js/ember-orientation)
 
+![Device Orientation Angles](http://i60.tinypic.com/k1ri0z.jpg)
+Image Source: Opera developer docs
+
 Effortlessly respond to device orientation events and changes 
 
 ### Use
@@ -36,7 +39,7 @@ let MyComponent = Ember.Component.extend({
 
 The service also has two methods to make the tilt data more easily consumable
 
-* `transformationMatrix` - a 9-length transformation matrix formed
+* `transformationMatrix` - a 9-length transformation matrix calculated from alpha, beta and gamma as follows:
 ![Rotation Matrix](https://dev.opera.com/articles/w3c-device-orientation-usage/equation13a.png)
 * normalVector - a 3-length unit vector normal to the screen of the device.
 
