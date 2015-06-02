@@ -8,6 +8,9 @@ export default Ember.View.extend(DeviceOrientationAware, {
     get() {
       return `transform: rotateZ(${(this.get('tiltAlpha'))}deg) ` +
              `rotateX(${this.get('tiltBeta')}deg) ` +
+             `rotateY(${-this.get('tiltGamma')}deg);` +
+             `-webkit-transform: rotateZ(${(this.get('tiltAlpha'))}deg) ` +
+             `rotateX(${this.get('tiltBeta')}deg) ` +
              `rotateY(${-this.get('tiltGamma')}deg)`;
     }
   })
