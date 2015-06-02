@@ -4,7 +4,7 @@ import DeviceOrientationAware from 'ember-orientation/mixins/device-orientation-
 export default Ember.View.extend(DeviceOrientationAware, {
   classNames: ['index-view'],
   didMove(evt) {
-    console.log("Event", evt);
+    // console.log("Event", evt);
   },
   transformStyle: Ember.computed('tiltAlpha', 'tiltBeta', 'tiltGamma', {
     get() {

@@ -3,7 +3,6 @@ import { transformationMatrix, transformVector } from '../utils/orientation-tran
 
 const { classify } = Ember.String;
 const { map } = Ember.EnumerableUtils;
-const { get } = Ember;
 
 export default Ember.Service.extend(Ember.Evented, {
 
@@ -124,7 +123,7 @@ export default Ember.Service.extend(Ember.Evented, {
     const prevTilt = this.get('_tilt');
     let obj = {};
     for (let k in keys) {
-      obj[keys[k]] = get(event, keys[k]) - get(prevTilt, keys[k]);
+      obj[keys[k]] = Ember.get(event, keys[k]) - Ember.get(prevTilt, keys[k]);
     }
     return obj;
   },
