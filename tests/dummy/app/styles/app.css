@@ -10,9 +10,16 @@
 
 .index-view {
   background-color: #ddd;
-  min-width: 500px;
+  padding: 20px;
 }
 
 .brand-logo {
   white-space: nowrap;
+}
+.text-center {
+  text-align: center;
+}
+.github-button-container {
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
