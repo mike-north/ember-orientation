@@ -61,7 +61,7 @@ export default Ember.Service.extend(Ember.Evented, {
           '_tilt.gamma': gamma
         });
         svc._fireTiltEvent(event);
-        Ember.run.debounce(svc, svc._fireDebouncedTiltEvent, event, this.get('debounceTimeout'));
+        Ember.run.debounce(svc, svc._fireDebouncedTiltEvent, event, svc.get('debounceTimeout'));
       }
     };
     this._onMotionHandler = event => {
@@ -73,9 +73,9 @@ export default Ember.Service.extend(Ember.Evented, {
           '_acceleration.gamma': z
         });
         svc._fireMotionEvent(event);
-        Ember.run.debounce(svc, svc._fireDebouncedMotionEvent, event, this.get('debounceTimeout'));
+        Ember.run.debounce(svc, svc._fireDebouncedMotionEvent, event, svc.get('debounceTimeout'));
       }
-    }
+    };
     if (this.get('supportsOrientation')) {
       this._installTiltListener();
     }
