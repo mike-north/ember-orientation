@@ -1,8 +1,18 @@
-# Ember-orientation [![Build Status](https://travis-ci.org/truenorth/ember-orientation.svg?branch=master)](https://travis-ci.org/truenorth/ember-orientation) [![Code Climate](https://codeclimate.com/github/truenorth/ember-orientation/badges/gpa.svg)](https://codeclimate.com/github/truenorth/ember-orientation) [![npm version](https://badge.fury.io/js/ember-orientation.svg)](http://badge.fury.io/js/ember-orientation)
+# Ember-orientation 
+
+<img align="right" src="http://i60.tinypic.com/k1ri0z.jpg" />
+
+[![Build Status](https://travis-ci.org/truenorth/ember-orientation.svg?branch=master)](https://travis-ci.org/truenorth/ember-orientation)
+[![Code Climate](https://codeclimate.com/github/truenorth/ember-orientation/badges/gpa.svg)](https://codeclimate.com/github/truenorth/ember-orientation)
+[![npm version](https://badge.fury.io/js/ember-orientation.svg)](http://badge.fury.io/js/ember-orientation)
+[![Dependency Status](https://david-dm.org/truenorth/ember-orientation.svg)](https://david-dm.org/truenorth/ember-orientation)
+[![devDependency Status](https://david-dm.org/truenorth/ember-orientation/dev-status.svg)](https://david-dm.org/truenorth/ember-orientation#info=devDependencies)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-orientation.svg)](http://emberobserver.com/addons/ember-orientation)
+
+
 Effortlessly respond to device orientation events and changes 
 
 
-![Device Orientation Angles](http://i60.tinypic.com/k1ri0z.jpg) *
 
 
 ### Use
