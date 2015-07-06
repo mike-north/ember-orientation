@@ -1,6 +1,6 @@
 {
   "name": "ember-orientation",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Idiomatically mobile device orientation changes in Ember.js",
   "directories": {
     "doc": "doc",
@@ -11,11 +11,12 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/truenorth/ember-orientation",
+  "repository": "https://github.com/truenorth/ember-orientation.git",
+  "homepage": "https://github.com/truenorth/ember-orientation",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "Mike North <michael.l.north@gmail.com>",
+  "author": "Mike North <michael.l.north@gmail.com> (http://mike.works)",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
@@ -43,6 +44,7 @@
     "ember-cli-babel": "^5.0.0"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "http://mike.works/ember-orientation"
   }
 }
