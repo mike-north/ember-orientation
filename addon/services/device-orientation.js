@@ -2,7 +2,6 @@ import Ember from 'ember';
 import { transformationMatrix, transformVector } from '../utils/orientation-transformation-matrix';
 
 const { classify } = Ember.String;
-const { map } = Ember.EnumerableUtils;
 
 export default Ember.Service.extend(Ember.Evented, {
 
@@ -130,7 +129,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
   _setDefaults() {
     const defaults = Ember.getWithDefault(this, 'orientationServiceDefaults', {});
-    map(Ember.keys(defaults), key => {
+    Ember.keys(defaults).map(key => {
       const classifiedKey = classify(key);
       const defaultKey = `default${classifiedKey}`;
       return Ember.set(this, defaultKey, defaults[key]);
