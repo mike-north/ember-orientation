@@ -3,7 +3,6 @@
 	[
 		{
 			"path": ".",
-      "name": "Ember Orientation",
       "folder_exclude_patterns": ["tmp", "bower_components", "node_modules"]
 		}
 	]
