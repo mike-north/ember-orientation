@@ -1,6 +1,6 @@
 {
   "name": "ember-orientation",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Idiomatically mobile device orientation changes in Ember.js",
   "directories": {
     "doc": "doc",
@@ -11,8 +11,8 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/truenorth/ember-orientation.git",
-  "homepage": "https://github.com/truenorth/ember-orientation",
+  "repository": "https://github.com/mike-north/ember-orientation.git",
+  "homepage": "https://github.com/mike-north/ember-orientation",
   "engines": {
     "node": ">= 0.10.0"
   },
