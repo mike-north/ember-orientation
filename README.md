@@ -130,3 +130,5 @@ module.exports = function(environment) {
 
 
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+
+![Analytics](https://ga-beacon.appspot.com/UA-66610985-1/mike-north/ember-orientation/readme)
