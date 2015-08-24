@@ -1,6 +1,6 @@
 {
   "name": "ember-orientation",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Idiomatically mobile device orientation changes in Ember.js",
   "directories": {
     "doc": "doc",
