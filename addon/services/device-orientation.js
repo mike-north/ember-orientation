@@ -3,8 +3,9 @@ import { transformationMatrix, transformVector } from '../utils/orientation-tran
 
 const { classify } = Ember.String;
 const keys = Object.keys || Ember.keys;
+const { Service, computed, run, Evented, get, set, getWithDefault } = Ember;
 
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 
   _tilt: Ember.Object.create({
     alpha: null,
@@ -27,21 +28,21 @@ export default Ember.Service.extend(Ember.Evented, {
   supportsOrientation: null,
   supportsMotion: null,
 
-  alpha: Ember.computed.readOnly('_tilt.alpha'),
-  beta: Ember.computed.readOnly('_tilt.beta'),
-  gamma: Ember.computed.readOnly('_tilt.gamma'),
+  alpha: computed.readOnly('_tilt.alpha'),
+  beta: computed.readOnly('_tilt.beta'),
+  gamma: computed.readOnly('_tilt.gamma'),
 
-  accelerationX: Ember.computed.readOnly('_acceleration.x'),
-  accelerationY: Ember.computed.readOnly('_acceleration.y'),
-  accelerationZ: Ember.computed.readOnly('_acceleration.z'),
+  accelerationX: computed.readOnly('_acceleration.x'),
+  accelerationY: computed.readOnly('_acceleration.y'),
+  accelerationZ: computed.readOnly('_acceleration.z'),
 
-  rotationRateAlpha: Ember.computed.readOnly('_rotationRate.alpha'),
-  rotationRateBeta: Ember.computed.readOnly('_rotationRate.beta'),
-  rotationRateGamma: Ember.computed.readOnly('_rotationRate.gamma'),
+  rotationRateAlpha: computed.readOnly('_rotationRate.alpha'),
+  rotationRateBeta: computed.readOnly('_rotationRate.beta'),
+  rotationRateGamma: computed.readOnly('_rotationRate.gamma'),
 
-  debounceTimeout: Ember.computed.oneWay('defaultDebounceTimeout'),
-  tiltAngleSensitivity: Ember.computed.oneWay('defaultTiltAngleSensitivity'),
-  accelerationSensitivity: Ember.computed.oneWay('defaultAccelerationSensitivity'),
+  debounceTimeout: computed.oneWay('defaultDebounceTimeout'),
+  tiltAngleSensitivity: computed.oneWay('defaultTiltAngleSensitivity'),
+  accelerationSensitivity: computed.oneWay('defaultAccelerationSensitivity'),
 
   init() {
     this._super(...arguments);
@@ -60,7 +61,7 @@ export default Ember.Service.extend(Ember.Evented, {
           '_tilt.gamma': gamma
         });
         svc._fireTiltEvent(event);
-        Ember.run.debounce(svc, svc._fireDebouncedTiltEvent, event, svc.get('debounceTimeout'));
+        run.debounce(svc, svc._fireDebouncedTiltEvent, event, svc.get('debounceTimeout'));
       }
     };
     this._onMotionHandler = event => {
@@ -72,7 +73,7 @@ export default Ember.Service.extend(Ember.Evented, {
           '_acceleration.gamma': z
         });
         svc._fireMotionEvent(event);
-        Ember.run.debounce(svc, svc._fireDebouncedMotionEvent, event, svc.get('debounceTimeout'));
+        run.debounce(svc, svc._fireDebouncedMotionEvent, event, svc.get('debounceTimeout'));
       }
     };
     if (this.get('supportsOrientation')) {
@@ -84,12 +85,12 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   normalVector() {
-    const { alpha, beta, gamma } = this.get('_tilt');
+    let { alpha, beta, gamma } = this.get('_tilt');
     return transformVector([0, 0, 1], alpha, beta, gamma);
   },
 
   transformationMatrix() {
-    const { alpha, beta, gamma } = this.get('_tilt');
+    let { alpha, beta, gamma } = this.get('_tilt');
     return transformationMatrix(alpha, beta, gamma);
   },
 
@@ -120,20 +121,20 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _calculateDeltas(event, keys=['alpha', 'beta', 'gamma']) {
-    const prevTilt = this.get('_tilt');
-    let obj = {};
-    for (let k in keys) {
-      obj[keys[k]] = Ember.get(event, keys[k]) - Ember.get(prevTilt, keys[k]);
-    }
+    let prevTilt = this.get('_tilt'),
+      obj = {};
+    keys.forEach(function(key) {
+      obj[key] = get(event, key) - get(prevTilt, key);
+    });
     return obj;
   },
 
   _setDefaults() {
-    const defaults = Ember.getWithDefault(this, 'orientationServiceDefaults', {});
+    let defaults = getWithDefault(this, 'orientationServiceDefaults', {});
     keys(defaults).map(key => {
-      const classifiedKey = classify(key);
-      const defaultKey = `default${classifiedKey}`;
-      return Ember.set(this, defaultKey, defaults[key]);
+      let classifiedKey = classify(key);
+      let defaultKey = `default${classifiedKey}`;
+      return set(this, defaultKey, defaults[key]);
     });
   },
 
