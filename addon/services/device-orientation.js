@@ -156,11 +156,11 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _calculateDeltas(event, keys = ['alpha', 'beta', 'gamma']) {
-    const prevTilt = this.get('_tilt');
+    let prevTilt = this.get('_tilt');
     let obj = {};
-    for (let k in keys) {
-      obj[keys[k]] = Ember.get(event, keys[k]) - Ember.get(prevTilt, keys[k]);
-    }
+    keys.forEach((key) => {
+      obj[key] = Ember.get(event, key) - Ember.get(prevTilt, key);
+    });
     return obj;
   },
 
