@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
+
+const { computed, computed: { alias } } = Ember;
 
 function injectService(serviceName) {
-  return Ember.computed({
-    get() {
-      return this.container.lookup(`service:${serviceName}`);
-    }
+  return computed(function() {
+    return getOwner(this).lookup(`service:${serviceName}`);
   });
 }
 
@@ -19,9 +20,9 @@ export default Ember.Mixin.create({
     this.get('_orientationService').on('debouncedDeviceMove', this, this.debouncedDidMove);
   },
 
-  tiltAlpha: Ember.computed.alias('_orientationService.alpha'),
-  tiltBeta: Ember.computed.alias('_orientationService.beta'),
-  tiltGamma: Ember.computed.alias('_orientationService.gamma'),
+  tiltAlpha: alias('_orientationService.alpha'),
+  tiltBeta: alias('_orientationService.beta'),
+  tiltGamma: alias('_orientationService.gamma'),
 
   didTilt(/*evt*/) {},
   debouncedDidTilt(/*evt*/) {},

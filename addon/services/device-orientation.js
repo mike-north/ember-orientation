@@ -1,78 +1,104 @@
 import Ember from 'ember';
-import { transformationMatrix, transformVector } from '../utils/orientation-transformation-matrix';
+import {
+  transformationMatrix,
+  transformVector
+} from '../utils/orientation-transformation-matrix';
 
-const { classify } = Ember.String;
+const {
+  classify
+} = Ember.String;
 const keys = Object.keys || Ember.keys;
+const {
+  run: {
+    debounce
+  },
+  computed: {
+    readOnly,
+    oneWay
+  },
+  getWithDefault
+} = Ember;
 
 export default Ember.Service.extend(Ember.Evented, {
 
-  _tilt: Ember.Object.create({
-    alpha: null,
-    beta: null,
-    gamma: null
-  }),
+  _tilt: null,
 
-  _acceleration: Ember.Object.create({
-    x: null,
-    y: null,
-    z: null
-  }),
+  _acceleration: null,
 
-  _rotationRate: Ember.Object.create({
-    alpha: null,
-    beta: null,
-    gamma: null
-  }),
+  _rotationRate: null,
 
   supportsOrientation: null,
   supportsMotion: null,
 
-  alpha: Ember.computed.readOnly('_tilt.alpha'),
-  beta: Ember.computed.readOnly('_tilt.beta'),
-  gamma: Ember.computed.readOnly('_tilt.gamma'),
+  alpha: readOnly('_tilt.alpha'),
+  beta: readOnly('_tilt.beta'),
+  gamma: readOnly('_tilt.gamma'),
 
-  accelerationX: Ember.computed.readOnly('_acceleration.x'),
-  accelerationY: Ember.computed.readOnly('_acceleration.y'),
-  accelerationZ: Ember.computed.readOnly('_acceleration.z'),
+  accelerationX: readOnly('_acceleration.x'),
+  accelerationY: readOnly('_acceleration.y'),
+  accelerationZ: readOnly('_acceleration.z'),
 
-  rotationRateAlpha: Ember.computed.readOnly('_rotationRate.alpha'),
-  rotationRateBeta: Ember.computed.readOnly('_rotationRate.beta'),
-  rotationRateGamma: Ember.computed.readOnly('_rotationRate.gamma'),
+  rotationRateAlpha: readOnly('_rotationRate.alpha'),
+  rotationRateBeta: readOnly('_rotationRate.beta'),
+  rotationRateGamma: readOnly('_rotationRate.gamma'),
 
-  debounceTimeout: Ember.computed.oneWay('defaultDebounceTimeout'),
-  tiltAngleSensitivity: Ember.computed.oneWay('defaultTiltAngleSensitivity'),
-  accelerationSensitivity: Ember.computed.oneWay('defaultAccelerationSensitivity'),
+  debounceTimeout: oneWay('defaultDebounceTimeout'),
+  tiltAngleSensitivity: oneWay('defaultTiltAngleSensitivity'),
+  accelerationSensitivity: oneWay('defaultAccelerationSensitivity'),
 
   init() {
     this._super(...arguments);
+    this.set('_tilt', {
+      alpha: null,
+      beta: null,
+      gamma: null
+    });
+    this.set('_acceleration', {
+      x: null,
+      y: null,
+      z: null
+    });
+    this.set('_rotationRate', {
+      alpha: null,
+      beta: null,
+      gamma: null
+    });
     this._setDefaults();
 
     this.set('supportsOrientation', window.DeviceOrientationEvent);
     this.set('supportsMotion', window.DeviceMotionEvent);
 
     let svc = this;
-    this._onTiltHandler = event => {
+    this._onTiltHandler = (event) => {
       if (svc._shouldFireTiltEvent(event)) {
-        let { alpha, beta, gamma } = event;
+        let {
+          alpha,
+          beta,
+          gamma
+        } = event;
         svc.setProperties({
           '_tilt.alpha': alpha,
           '_tilt.beta': beta,
           '_tilt.gamma': gamma
         });
         svc._fireTiltEvent(event);
-        Ember.run.debounce(svc, svc._fireDebouncedTiltEvent, event, svc.get('debounceTimeout'));
+        debounce(svc, svc._fireDebouncedTiltEvent, event, svc.get('debounceTimeout'));
       }
     };
-    this._onMotionHandler = event => {
+    this._onMotionHandler = (event) => {
       if (svc._shouldFireMotionEvent(event)) {
-        let { x, y, z } = event.acceleration;
+        let {
+          x,
+          y,
+          z
+        } = event.acceleration;
         svc.setProperties({
           '_acceleration.alpha': x,
           '_acceleration.beta': y,
           '_acceleration.gamma': z
         });
         svc._fireMotionEvent(event);
-        Ember.run.debounce(svc, svc._fireDebouncedMotionEvent, event, svc.get('debounceTimeout'));
+        debounce(svc, svc._fireDebouncedMotionEvent, event, svc.get('debounceTimeout'));
       }
     };
     if (this.get('supportsOrientation')) {
@@ -84,12 +110,20 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   normalVector() {
-    const { alpha, beta, gamma } = this.get('_tilt');
+    const {
+      alpha,
+      beta,
+      gamma
+    } = this.get('_tilt');
     return transformVector([0, 0, 1], alpha, beta, gamma);
   },
 
   transformationMatrix() {
-    const { alpha, beta, gamma } = this.get('_tilt');
+    const {
+      alpha,
+      beta,
+      gamma
+    } = this.get('_tilt');
     return transformationMatrix(alpha, beta, gamma);
   },
 
@@ -105,6 +139,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
   _shouldFireTiltEvent(event) {
     let deltas = this._calculateDeltas(event);
+
     function sq(x) {
       return x * x;
     }
@@ -113,13 +148,14 @@ export default Ember.Service.extend(Ember.Evented, {
 
   _shouldFireMotionEvent(event) {
     let deltas = this._calculateDeltas(event, ['x', 'y', 'z']);
+
     function sq(x) {
       return x * x;
     }
     return Math.max(sq(deltas.x), Math.max(sq(deltas.y), sq(deltas.z))) >= sq(this.get('accelerationSensitivity'));
   },
 
-  _calculateDeltas(event, keys=['alpha', 'beta', 'gamma']) {
+  _calculateDeltas(event, keys = ['alpha', 'beta', 'gamma']) {
     const prevTilt = this.get('_tilt');
     let obj = {};
     for (let k in keys) {
@@ -129,8 +165,8 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _setDefaults() {
-    const defaults = Ember.getWithDefault(this, 'orientationServiceDefaults', {});
-    keys(defaults).map(key => {
+    const defaults = getWithDefault(this, 'orientationServiceDefaults', {});
+    keys(defaults).map((key) => {
       const classifiedKey = classify(key);
       const defaultKey = `default${classifiedKey}`;
       return Ember.set(this, defaultKey, defaults[key]);
