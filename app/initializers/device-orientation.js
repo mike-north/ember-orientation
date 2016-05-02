@@ -1,7 +1,8 @@
 import DeviceOrientationService from 'ember-orientation/services/device-orientation';
 import config from '../config/environment';
 
-export function initialize(_container, application) {
+export function initialize() {
+  let application = arguments[1] || arguments[0];
   const { orientationServiceDefaults } = config;
   const { injectionFactories } = orientationServiceDefaults;
 
@@ -9,7 +10,7 @@ export function initialize(_container, application) {
   application.register('service:device-orientation', DeviceOrientationService);
   application.inject('service:device-orientation', 'orientationServiceDefaults', 'config:device-orientation');
 
-  injectionFactories.forEach(factory => {
+  injectionFactories.forEach((factory) => {
     application.inject(factory, 'orientation', 'service:device-orientation');
   });
 }
