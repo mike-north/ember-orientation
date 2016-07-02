@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
 
-const { computed, computed: { alias } } = Ember;
+const { Mixin, computed, computed: { alias } } = Ember;
 
 function injectService(serviceName) {
   return computed(function() {
@@ -9,7 +9,7 @@ function injectService(serviceName) {
   });
 }
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   _orientationService: injectService('device-orientation'),
 
   init() {

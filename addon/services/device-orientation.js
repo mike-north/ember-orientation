@@ -4,11 +4,13 @@ import {
   transformVector
 } from '../utils/orientation-transformation-matrix';
 
-const {
-  classify
-} = Ember.String;
+// jscs:disable disallowDirectPropertyAccess
 const keys = Object.keys || Ember.keys;
+// jscs:enable disallowDirectPropertyAccess
+
 const {
+  get,
+  set,
   run: {
     debounce
   },
@@ -16,10 +18,13 @@ const {
     readOnly,
     oneWay
   },
-  getWithDefault
+  getWithDefault,
+  Service,
+  Evented,
+  String: { classify }
 } = Ember;
 
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 
   _tilt: null,
 
@@ -159,7 +164,7 @@ export default Ember.Service.extend(Ember.Evented, {
     let prevTilt = this.get('_tilt');
     let obj = {};
     keys.forEach((key) => {
-      obj[key] = Ember.get(event, key) - Ember.get(prevTilt, key);
+      obj[key] = get(event, key) - get(prevTilt, key);
     });
     return obj;
   },
@@ -169,7 +174,7 @@ export default Ember.Service.extend(Ember.Evented, {
     keys(defaults).map((key) => {
       const classifiedKey = classify(key);
       const defaultKey = `default${classifiedKey}`;
-      return Ember.set(this, defaultKey, defaults[key]);
+      return set(this, defaultKey, defaults[key]);
     });
   },
 
