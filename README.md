@@ -1,5 +1,7 @@
 # Ember-orientation 
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mike-north/ember-orientation.svg)](https://greenkeeper.io/)
+
 <img align="right" src="http://i60.tinypic.com/k1ri0z.jpg" />
 
 [![Build Status](https://travis-ci.org/mike-north/ember-orientation.svg?branch=master)](https://travis-ci.org/mike-north/ember-orientation)
