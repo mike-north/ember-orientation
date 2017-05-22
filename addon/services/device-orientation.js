@@ -4,9 +4,8 @@ import {
   transformVector
 } from '../utils/orientation-transformation-matrix';
 
-// jscs:disable disallowDirectPropertyAccess
+// eslint-disable-next-line
 const keys = Object.keys || Ember.keys;
-// jscs:enable disallowDirectPropertyAccess
 
 const {
   get,
@@ -115,7 +114,7 @@ export default Service.extend(Evented, {
   },
 
   normalVector() {
-    const {
+    let {
       alpha,
       beta,
       gamma
@@ -124,7 +123,7 @@ export default Service.extend(Evented, {
   },
 
   transformationMatrix() {
-    const {
+    let {
       alpha,
       beta,
       gamma
@@ -170,10 +169,10 @@ export default Service.extend(Evented, {
   },
 
   _setDefaults() {
-    const defaults = getWithDefault(this, 'orientationServiceDefaults', {});
+    let defaults = getWithDefault(this, 'orientationServiceDefaults', {});
     keys(defaults).map((key) => {
-      const classifiedKey = classify(key);
-      const defaultKey = `default${classifiedKey}`;
+      let classifiedKey = classify(key);
+      let defaultKey = `default${classifiedKey}`;
       return set(this, defaultKey, defaults[key]);
     });
   },

@@ -8,11 +8,11 @@ export default Component.extend(DeviceOrientationAware, {
   classNames: ['x-example'],
 
   transformStyle: computed('tiltAlpha', 'tiltBeta', 'tiltGamma', function() {
-    return htmlSafe(`transform: rotateZ(${(this.get('tiltAlpha'))}deg) ` +
-      `rotateX(${-this.get('tiltBeta')}deg) ` +
-      `rotateY(${-this.get('tiltGamma')}deg);` +
-      `-webkit-transform: rotateZ(${(this.get('tiltAlpha'))}deg) ` +
-      `rotateX(${-this.get('tiltBeta')}deg) ` +
-      `rotateY(${-this.get('tiltGamma')}deg)`);
+    return htmlSafe(`transform: rotateZ(${(this.get('tiltAlpha'))}deg) `
+      + `rotateX(${-this.get('tiltBeta')}deg) `
+      + `rotateY(${-this.get('tiltGamma')}deg);`
+      + `-webkit-transform: rotateZ(${(this.get('tiltAlpha'))}deg) `
+      + `rotateX(${-this.get('tiltBeta')}deg) `
+      + `rotateY(${-this.get('tiltGamma')}deg)`);
   })
 });
