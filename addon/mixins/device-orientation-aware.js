@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
-const { Mixin, computed, computed: { alias } } = Ember;
+const { Mixin, computed, computed: { alias }, getOwner } = Ember;
 
 function injectService(serviceName) {
   return computed(function() {
@@ -24,8 +23,8 @@ export default Mixin.create({
   tiltBeta: alias('_orientationService.beta'),
   tiltGamma: alias('_orientationService.gamma'),
 
-  didTilt(/*evt*/) {},
-  debouncedDidTilt(/*evt*/) {},
-  didMove(/*evt*/) {},
-  debouncedDidMove(/*evt*/) {}
+  didTilt(/* evt*/) {},
+  debouncedDidTilt(/* evt*/) {},
+  didMove(/* evt*/) {},
+  debouncedDidMove(/* evt*/) {}
 });
