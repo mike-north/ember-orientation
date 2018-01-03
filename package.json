@@ -7,18 +7,20 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server",
     "build": "ember build",
-    "test": "ember try:testall"
+    "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests",
+    "start": "ember serve",
+    "test": "ember try:each"
   },
   "repository": "https://github.com/mike-north/ember-orientation.git",
   "homepage": "https://github.com/mike-north/ember-orientation",
   "engines": {
-    "node": ">= 4"
+    "node": "^4.5 || 6.* || >= 7.*"
   },
   "author": "Mike North <michael.l.north@gmail.com> (http://mike.works)",
   "license": "MIT",
   "devDependencies": {
+    "@types/ember": "^2.8.4",
     "broccoli-asset-rev": "^2.4.5",
     "ember-cli": "2.18.0",
     "ember-cli-dependency-checker": "^2.0.0",
@@ -37,17 +39,12 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.1.0",
     "ember-source": "~2.18.0",
-    "eslint-plugin-ember-suave": "^1.0.0",
+    "eslint-plugin-ember": "^5.0.0",
+    "eslint-plugin-node": "^5.2.1",
     "greenkeeper-lockfile": "^1.2.1",
     "loader.js": "^4.2.3"
   },
-  "keywords": [
-    "ember-addon",
-    "orientation",
-    "mobile",
-    "tilt",
-    "rotate"
-  ],
+  "keywords": ["ember-addon", "orientation", "mobile", "tilt", "rotate"],
   "dependencies": {
     "ember-cli-babel": "^6.0.0"
   },
