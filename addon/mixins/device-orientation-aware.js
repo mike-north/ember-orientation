@@ -1,6 +1,7 @@
-import Ember from 'ember';
-
-const { Mixin, computed, computed: { alias }, getOwner } = Ember;
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { getOwner } from '@ember/application';
 
 function injectService(serviceName) {
   return computed(function() {

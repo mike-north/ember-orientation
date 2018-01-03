@@ -1,8 +1,7 @@
 let degtorad = Math.PI / 180; // Degree-to-Radian conversion
 
 export function transformationMatrix(alpha, beta, gamma) {
-
-  let _x = beta  ? beta  * degtorad : 0; // beta value
+  let _x = beta ? beta * degtorad : 0; // beta value
   let _y = gamma ? gamma * degtorad : 0; // gamma value
   let _z = alpha ? alpha * degtorad : 0; // alpha value
 
@@ -29,11 +28,7 @@ export function transformationMatrix(alpha, beta, gamma) {
   let m32 = sX;
   let m33 = cX * cY;
 
-  return [
-    m11,    m12,    m13,
-    m21,    m22,    m23,
-    m31,    m32,    m33
-  ];
+  return [m11, m12, m13, m21, m22, m23, m31, m32, m33];
 }
 
 export function transformVector(vector, alpha, beta, gamma) {
@@ -44,4 +39,3 @@ export function transformVector(vector, alpha, beta, gamma) {
     vector[0] * tm[2] + vector[1] * tm[5] + vector[2] * tm[8]
   ];
 }
-

@@ -10,7 +10,7 @@ export function initialize() {
   application.register('service:device-orientation', DeviceOrientationService);
   application.inject('service:device-orientation', 'orientationServiceDefaults', 'config:device-orientation');
 
-  injectionFactories.forEach((factory) => {
+  injectionFactories.forEach(factory => {
     application.inject(factory, 'orientation', 'service:device-orientation');
   });
 }

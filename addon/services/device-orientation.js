@@ -1,30 +1,16 @@
-import Ember from 'ember';
-import {
-  transformationMatrix,
-  transformVector
-} from '../utils/orientation-transformation-matrix';
+import { keys as emberKeys } from '@ember/polyfills';
+import { debounce } from '@ember/runloop';
+import { oneWay, readOnly } from '@ember/object/computed';
+import { getWithDefault, set, get } from '@ember/object';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
+import { classify } from '@ember/string';
+import { transformationMatrix, transformVector } from '../utils/orientation-transformation-matrix';
 
 // eslint-disable-next-line
-const keys = Object.keys || Ember.keys;
-
-const {
-  get,
-  set,
-  run: {
-    debounce
-  },
-  computed: {
-    readOnly,
-    oneWay
-  },
-  getWithDefault,
-  Service,
-  Evented,
-  String: { classify }
-} = Ember;
+const keys = Object.keys || emberKeys;
 
 export default Service.extend(Evented, {
-
   _tilt: null,
 
   _acceleration: null,
@@ -73,13 +59,9 @@ export default Service.extend(Evented, {
     this.set('supportsMotion', window.DeviceMotionEvent);
 
     let svc = this;
-    this._onTiltHandler = (event) => {
+    this._onTiltHandler = event => {
       if (svc._shouldFireTiltEvent(event)) {
-        let {
-          alpha,
-          beta,
-          gamma
-        } = event;
+        let { alpha, beta, gamma } = event;
         svc.setProperties({
           '_tilt.alpha': alpha,
           '_tilt.beta': beta,
@@ -89,13 +71,9 @@ export default Service.extend(Evented, {
         debounce(svc, svc._fireDebouncedTiltEvent, event, svc.get('debounceTimeout'));
       }
     };
-    this._onMotionHandler = (event) => {
+    this._onMotionHandler = event => {
       if (svc._shouldFireMotionEvent(event)) {
-        let {
-          x,
-          y,
-          z
-        } = event.acceleration;
+        let { x, y, z } = event.acceleration;
         svc.setProperties({
           '_acceleration.alpha': x,
           '_acceleration.beta': y,
@@ -114,20 +92,12 @@ export default Service.extend(Evented, {
   },
 
   normalVector() {
-    let {
-      alpha,
-      beta,
-      gamma
-    } = this.get('_tilt');
+    let { alpha, beta, gamma } = this.get('_tilt');
     return transformVector([0, 0, 1], alpha, beta, gamma);
   },
 
   transformationMatrix() {
-    let {
-      alpha,
-      beta,
-      gamma
-    } = this.get('_tilt');
+    let { alpha, beta, gamma } = this.get('_tilt');
     return transformationMatrix(alpha, beta, gamma);
   },
 
@@ -147,7 +117,9 @@ export default Service.extend(Evented, {
     function sq(x) {
       return x * x;
     }
-    return Math.max(sq(deltas.alpha), Math.max(sq(deltas.beta), sq(deltas.gamma))) >= sq(this.get('tiltAngleSensitivity'));
+    return (
+      Math.max(sq(deltas.alpha), Math.max(sq(deltas.beta), sq(deltas.gamma))) >= sq(this.get('tiltAngleSensitivity'))
+    );
   },
 
   _shouldFireMotionEvent(event) {
@@ -162,7 +134,7 @@ export default Service.extend(Evented, {
   _calculateDeltas(event, keys = ['alpha', 'beta', 'gamma']) {
     let prevTilt = this.get('_tilt');
     let obj = {};
-    keys.forEach((key) => {
+    keys.forEach(key => {
       obj[key] = get(event, key) - get(prevTilt, key);
     });
     return obj;
@@ -170,7 +142,7 @@ export default Service.extend(Evented, {
 
   _setDefaults() {
     let defaults = getWithDefault(this, 'orientationServiceDefaults', {});
-    keys(defaults).map((key) => {
+    keys(defaults).map(key => {
       let classifiedKey = classify(key);
       let defaultKey = `default${classifiedKey}`;
       return set(this, defaultKey, defaults[key]);
