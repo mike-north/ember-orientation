@@ -1,7 +1,8 @@
----
 language: node_js
 node_js:
-  - "4"
+  # we recommend testing addons with the same minimum supported node version as Ember CLI
+  # so that your addon works for all apps
+  - '8'
 
 sudo: false
 dist: trusty
@@ -11,49 +12,46 @@ addons:
 
 cache:
   yarn: true
-
+yarn: true
 env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
-  matrix:
-    # we recommend new addons test the current and previous LTS
-    # as well as latest stable release (bonus points to beta/canary)
-    - EMBER_TRY_SCENARIO=ember-lts-2.12
-    - EMBER_TRY_SCENARIO=ember-lts-2.16
-    - EMBER_TRY_SCENARIO=ember-release
-    - EMBER_TRY_SCENARIO=ember-beta
-    - EMBER_TRY_SCENARIO=ember-canary
-    - EMBER_TRY_SCENARIO=ember-default
 
-matrix:
-  fast_finish: true
+jobs:
+  fail_fast: true
   allow_failures:
     - env: EMBER_TRY_SCENARIO=ember-canary
+
+  include:
+    # runs linting and tests with current locked deps
+
+    - stage: 'Tests'
+      name: 'Tests'
+      script:
+        - yarn lint:hbs
+        - yarn lint:js
+        - yarn test
+
+    # we recommend new addons test the current and previous LTS
+    # as well as latest stable release (bonus points to beta/canary)
+    - stage: 'Additional Tests'
+      env: EMBER_TRY_SCENARIO=ember-lts-2.16
+    - env: EMBER_TRY_SCENARIO=ember-lts-2.18
+    - env: EMBER_TRY_SCENARIO=ember-release
+    - env: EMBER_TRY_SCENARIO=ember-beta
+    - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
+    - stage: 'Canary Tests'
+      script:
+        - yarn test
+      env: EMBER_TRY_SCENARIO=ember-canary
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add greenkeeper-lockfile@1
-
-before_script: greenkeeper-lockfile-update
 
 install:
   - yarn install --no-lockfile --non-interactive
 
-after_script: greenkeeper-lockfile-upload
-
 script:
-  - yarn lint:js
-  # Usually, it's ok to finish the test scenario without reverting
-  #  to the addon's original dependency state, skipping "cleanup".
-  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
-
-deploy:
-  provider: npm
-  email: michael.l.north@gmail.com
-  on:
-    tags: true
-    repo: mike-north/ember-orientation
-  api_key:
-    secure: WeQrYfpq6oimu9BbvfWJEUN0Laloql9jtMOxe60uL9BIAvQOR14086kkDSWnzrtBL4ydq+GT5rZtsJW2d20sB+jluLafgf2YXb3WverYZRFL0jNIPPaRibDx1nSE/OW7KQcJQc48qpG1gkuPWshI/sLCVxcfcBE8fC4hGFt2Z/XChlniKqgUB1rYJQ4g6MbHhE/wrVyBfuBYiJLrLxTQ/hyMtwW81x4/BCqD21L6EF7OeVNTHPt1Yyqngsqu5pz5azW96ruws1wlHfTUZVNIq/A1zqcH1IMUsKYi+yy3k4ylUAk7v/dCyoW2GE1JjxxPx2mSNYnP4LfHpRfJvNiZbwBza26LSvgjbPIL2MbveS546sitHAfefq8kD5oQt8gImiVC3E9AEDCJkm9OI23wPf+UGqUzH7SJouxkeHK9LMVFpBm759RkrDk9tVkhTF4dd4P/CYymGHlzUwNniRwxf4xht+FzIhFzu6F04nJ5WxjwpyxHOb7vdOC/SMy/lAymUR3jzWJmYR+u0gZUluPoSKKIpMkEW2G1PabQmmZQHe+kyciRXjz5QCGttAaWNfS7SMzn65mXPlXQC0MEgnW2UekfwkpPoyzSfdL6JMP3mNdU/NRVvZzBr1CyiCZ/B5cuVo+/e4qaZheEPZLdHtJFhw/YfWFQiUNk8LUhjPxj4go=
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO && yarn travis-deploy-once "yarn semantic-release"
