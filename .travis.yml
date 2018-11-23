@@ -12,7 +12,7 @@ addons:
 
 cache:
   yarn: true
-yarn: true
+
 env:
   global:
     # See https://git.io/vdao3 for details.
@@ -52,6 +52,10 @@ before_install:
 
 install:
   - yarn install --no-lockfile --non-interactive
+
+before_script:
+  - 'sudo chown root /opt/google/chrome/chrome-sandbox'
+  - 'sudo chmod 4755 /opt/google/chrome/chrome-sandbox'
 
 script:
   - commitlint-travis
