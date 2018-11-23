@@ -10,7 +10,7 @@
     "build": "ember build",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember try:each",
+    "test": "ember test",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
