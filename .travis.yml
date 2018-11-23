@@ -54,4 +54,5 @@ install:
   - yarn install --no-lockfile --non-interactive
 
 script:
+  - commitlint-travis
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO && yarn travis-deploy-once "yarn semantic-release"
