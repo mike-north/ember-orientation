@@ -4574,10 +4574,10 @@ ember-qunit@^3.5.0:
     ember-cli-test-loader "^2.2.0"
     qunit "~2.6.0"
 
-ember-resolver@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-5.2.0.tgz#6a9fd7e9483be694adce77abaf9585529d060bbb"
-  integrity sha512-vL7YnifeHA2g6OM3KF7PSCIcUBvPISfcxByqGmWgjynbZpd3KmBUpHVxAlqXUYqhO4viRcM0sohAgZ41bCv7QQ==
+ember-resolver@5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/ember-resolver/-/ember-resolver-5.2.1.tgz#538d7a29351316d9550864ff06fcbe55bdd92774"
+  integrity sha512-Ciz5qsrtILr7AGXO9mTSFs3/XKXpMYJqISNCfvIY0C8PlMgq+9RYbmUoBpAlvBUc/mUi3ORZKJ4csd9qchvxZw==
   dependencies:
     "@glimmer/resolver" "^0.4.1"
     babel-plugin-debug-macros "^0.1.10"
@@ -4853,10 +4853,10 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-plugin-ember@6.8.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.8.0.tgz#5270b2ea2728a9e960dedd0f3a807ef77d807ddb"
-  integrity sha512-R3gk1e/VafoUiLg3Y4fpnRNiQF8L1g2UxvbzwqCj9u3WhVOOptxqq8PebZxvLb1acfUY1/3y8+IbYSUwLn6v4A==
+eslint-plugin-ember@6.8.2:
+  version "6.8.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.8.2.tgz#3b512426c3d6cb29913471dedbee2c21f16fc26e"
+  integrity sha512-NXtanzQaX7p88rNK55ZlTU25MSiu8DDrdT83plgx1zQ8C8oVcX3qnnpD4SfaVfuGE1ZKmEGkelPZF8y6kU1qoA==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
     ember-rfc176-data "^0.3.9"
